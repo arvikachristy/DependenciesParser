@@ -7,42 +7,45 @@ import java.util.*;
 
 public class Main{
 
-    //ordered alphabetically,
-    static HashMap<String, String[]> sourceData = new LinkedHashMap<>(); // the input
+    static HashMap<String, String[]> sourceData = new LinkedHashMap<>(); // the input txt stored
     static ArrayList<String> keysMe = new ArrayList<>(); //key in order as specified
 
+    // parsing the txt Head file
     public void storeHead(String input){
-        String[] empty = new String[1];
-        empty[0]= " ";
-        String[] res = input.split(" -> "); //now store [gui,<space>awtui swingui]
-        if(res.length>1){
-        sourceData.put(res[0],storeTails(res[1]));}
-        else{
-            sourceData.put(res[0],empty);
-        }
-        keysMe.add(res[0]); //adding key in order as specified
+            //handling empty line
+            String[] empty = new String[1];
+            empty[0]= " ";
+            String[] res = input.split("\\s+->\\s+");
+            if(res.length>1){
+                sourceData.put(res[0],storeTails(res[1]));}
+            else{
+                sourceData.put(res[0],empty);
+            }
+            keysMe.add(res[0]);
     }
 
+    //parsing the txt tail
     public String[] storeTails(String input){
-        String[] res = input.split(" ");
+        String[] res = input.split("\\s+");
         return res;
     }
 
-
-    public String appendResult(String input){ //append everything as string
+    //append result as string
+    public String appendResult(String input){
         StringBuilder builder = new StringBuilder();
         builder.append(input + " -> ");
-        HashSet<String> resultMe = resultSet(input, new HashSet<>());
-
-        for(String p: resultMe){
-            builder.append(p + " ");
+        if(sourceData.containsKey(input)) {
+            TreeSet<String> resultMe = resultSet(input, new TreeSet<>());
+            for (String p : resultMe) {
+                builder.append(p + " ");
+            }
         }
-
         return builder.toString();
     }
 
     //recursive function to get all of the child members
-    public HashSet<String> resultSet(String input, HashSet<String> result){
+    //use tree to be alphabetical
+    public TreeSet<String> resultSet(String input, TreeSet<String> result){
         String[] value = sourceData.get(input);
         if (value != null){
             for(int u=0;u<value.length;u++){
@@ -50,14 +53,14 @@ public class Main{
                 resultSet(value[u], result);
             }
         }
+        //if the key doesnt exist!
         else{
-            return null; //if the key doesnt exist!
+            return null;
         }
-        //System.out.println(result);
         return result;
     }
 
-    //reading the txt file
+    //reading the original txt file
     public List<String> fileReader(String inputFilePath) {
         ArrayList<String> lines = new ArrayList<>();
 
@@ -72,11 +75,7 @@ public class Main{
     public static void main(String[] args) {
         List<String> lines;
 
-        String argstest[] = new String[2];
-        argstest[0] ="swingui";
-        argstest[1] ="awtui";
-
-        if (args.length < 1) {
+        if (args.length < 2) {
             System.out.println("Please provide input file name");
         }
         else {//load the txt file
@@ -88,7 +87,7 @@ public class Main{
             }
 
             for (int i = 1; i < args.length; i++) {
-                System.out.println(callit.appendResult(args[i]));
+                    System.out.println(callit.appendResult(args[i]));
             }
         }
 
