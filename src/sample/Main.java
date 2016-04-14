@@ -76,14 +76,14 @@ public class Main{
         }
         else {//load the txt file
             Main callit = new Main();
-            lines = callit.fileReader("src/sample/packages.txt");
+            lines = callit.fileReader(args[0]);
 
             for (int u = 0; u < lines.size(); u++) {
                 callit.storeHead(lines.get(u));
             }
 
-            for (int i = 0; i < argstest.length; i++) {
-                System.out.println(callit.appendResult(argstest[i]));
+            for (int i = 1; i < args.length; i++) {
+                System.out.println(callit.appendResult(args[i]));
             }
         }
 
