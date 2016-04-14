@@ -13,7 +13,7 @@ public class Main{
 
     public void storeHead(String input){
         String[] empty = new String[1];
-        empty[0]=null;
+        empty[0]= " ";
         String[] res = input.split(" -> "); //now store [gui,<space>awtui swingui]
         if(res.length>1){
         sourceData.put(res[0],storeTails(res[1]));}
@@ -32,7 +32,12 @@ public class Main{
     public String appendResult(String input){ //append everything as string
         StringBuilder builder = new StringBuilder();
         builder.append(input + " -> ");
-        builder.append(resultSet(input, new HashSet<>()));
+        HashSet<String> resultMe = resultSet(input, new HashSet<>());
+
+        for(String p: resultMe){
+            builder.append(p + " ");
+        }
+
         return builder.toString();
     }
 
