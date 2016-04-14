@@ -20,7 +20,22 @@ for example:
 ```
 java sample.Main packages.txt swingui awtui unknown
 ```
-All unknown packages will return zero values e.g.:
-unknown -> 
+
 
 **The code has been tested and compiled on Windows 64-bit OS**
+
+
+sample input:
+```
+java sample.Main packages.txt swingui awtui unknownme gui
+```
+sample output:
+```
+swingui -> extensions framework runner
+awtui -> framework runner
+unknownme ->
+gui -> awtui extensions framework runner swingui
+```
+
+
+
